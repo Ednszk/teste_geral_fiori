@@ -1,0 +1,64 @@
+<mvc:View
+	controllerName="nspbapi1.pbapi1.controller.Object"
+	xmlns="sap.m"
+	xmlns:mvc="sap.ui.core.mvc"
+	xmlns:semantic="sap.f.semantic"
+	xmlns:f="sap.ui.layout.form"
+	xmlns:l="sap.ui.layout"
+	>
+
+	<semantic:SemanticPage
+		id="page"
+		headerPinnable="false"
+		toggleHeaderOnTitleClick="false"
+		busy="{objectView>/busy}"
+		busyIndicatorDelay="{objectView>/delay}">
+
+		<semantic:titleHeading>
+			<Title
+				text="Dados da ordem de venda"
+				level="H2"/>
+		</semantic:titleHeading>
+
+		<semantic:headerContent>
+
+			<ObjectNumber
+				number="{
+					path: 'Kwmeng',
+					formatter: '.formatter.numberUnit'
+				}"
+				unit="{Meins}"
+			/>
+		</semantic:headerContent>
+
+        <l:VerticalLayout>
+					<f:SimpleForm
+						editable="false"
+						layout="ResponsiveGridLayout"
+						labelSpanL="3" labelSpanM="3" emptySpanL="4" emptySpanM="4"
+						columnsL="1" columnsM="1">
+						<f:content>
+							<Label text="Ordem de venda"/>
+							<Text text="{Vbeln}"/>
+							<Label text="Item"/>
+							<Text text="{Posnr}"/>
+							<Label text="Cliente"/>
+							<Text text="{Kunnr}"/>
+						</f:content>
+					</f:SimpleForm>
+		</l:VerticalLayout>
+
+
+		<semantic:sendEmailAction>
+			<semantic:SendEmailAction id="shareEmail" press=".onShareEmailPress"/>
+		</semantic:sendEmailAction>
+
+
+	</semantic:SemanticPage>
+
+	<VBox>
+        
+
+	</VBox>
+
+</mvc:View>

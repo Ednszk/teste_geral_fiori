@@ -1,0 +1,25 @@
+specVersion: '2.4'
+metadata:
+  name: 'torretotalnf'
+type: application
+server:
+  customMiddleware:
+  - name: fiori-tools-proxy
+    afterMiddleware: compression
+    configuration:
+      ignoreCertError: false # true ignora erro de certificado (ex.: self-signed)
+      backend:
+      - path: /sap
+        url: https://lnl-s4h.opustech.com.br:5200
+        client: '200'
+      ui5:
+        path:
+        - /resources
+        - /test-resources
+        url: https://ui5.sap.com
+        version:  # ex.: 1.120.0 - vazio usa a última versão
+  - name: fiori-tools-appreload
+    afterMiddleware: compression
+    configuration:
+     port: 35730
+     path: webapp

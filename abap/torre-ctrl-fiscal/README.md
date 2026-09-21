@@ -23,21 +23,25 @@ Service Definition e publicada por uma Service Binding do tipo
 
 1. **Data Definition (Custom Entity)** — `zi_szk_teste_totalnf.ddls.asddls`
    `New ABAP Repository Object → Data Definition`, colar o conteúdo,
-   ativar.
-2. **Metadata Extension** — `zc_szk_teste_totalnf.ddls.asddls`
-   `New ABAP Repository Object → Data Definition → Metadata Extension`,
-   ativar. (Anotações `@UI.*` para o OVP: `HeaderInfo`, `SelectionField`
-   nos filtros, `LineItem`/`DataPoint` no `TotalNf`.)
-3. **Class** — `zcl_szk_ctrl_query.clas.abap`
+   ativar. As anotações `@UI.*` (`HeaderInfo`, `SelectionField` nos
+   filtros, `LineItem`/`DataPoint` no `TotalNf`) ficam **inline**, dentro
+   da própria Custom Entity — **não** dá pra usar Metadata Extension
+   separada aqui: `annotate entity` numa Custom Entity (`define custom
+   entity`) devolve `Cannot annotate '...'. The type of the annotated
+   entity is not supported` no ADT, porque Metadata Extension só é
+   suportada em CDS view entity normal (`define view entity`), não em
+   Custom Entity, na maioria das releases do ABAP Platform. Por isso não
+   existe mais um arquivo `zc_szk_teste_totalnf.ddls.asddls` separado.
+2. **Class** — `zcl_szk_ctrl_query.clas.abap`
    `New ABAP Repository Object → Class`, colar o conteúdo, ativar.
    (Reaproveita a mesma lógica de contagem por chave distinta do
    `conta_lado` do `/TNVAA/R_TORRE_CTRL`, só que sem a quebra por status/
    divergência — isso fica pra v2 do custom entity, quando o dashboard
    crescer além do card único.)
-4. **Service Definition** — `zszk_sd_torre_totalnf.srvd.asddls`
+3. **Service Definition** — `zszk_sd_torre_totalnf.srvd.asddls`
    `New ABAP Repository Object → Service Definition`, colar o conteúdo,
    ativar.
-5. **Service Binding** (não é arquivo de texto — criar direto no ADT):
+4. **Service Binding** (não é arquivo de texto — criar direto no ADT):
    `New ABAP Repository Object → Service Binding`
    - Nome sugerido: `ZSZK_UI_TORRE_TOTALNF`
    - Binding Type: **ODATA V4 - UI**

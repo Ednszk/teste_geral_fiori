@@ -17,7 +17,7 @@
 		},
 		"dataSources": {
 			"mainService": {
-				"uri": "/sap/opu/odata4/sap/zszk_ui_torre_totalnf/srvd/sap/zszk_sd_torre_totalnf/0001/",
+				"uri": "/sap/opu/odata4/sap/zui_szk_teste_dashboard/srvd/sap/zi_szk_teste_totalnf/0001/",
 				"type": "OData",
 				"settings": {
 					"odataVersion": "4.0",
@@ -46,12 +46,13 @@
 
 	"sap.ui5": {
 		"dependencies": {
-			"minUI5Version": "1.108.0",
+			"minUI5Version": "1.120.0",
 			"libs": {
 				"sap.ovp": {},
 				"sap.ui.core": {},
 				"sap.m": {},
-				"sap.f": {}
+				"sap.f": {},
+				"sap.fe.templates": {}
 			}
 		},
 
@@ -62,15 +63,23 @@
 					"bundleName": "nstorretotalnf.torretotalnf.i18n.i18n"
 				}
 			},
-			"": {
+			"mainModel": {
 				"dataSource": "mainService",
+				"preload": true,
 				"settings": {
-					"synchronizationMode": "None",
 					"operationMode": "Server",
 					"autoExpandSelect": true,
 					"earlyRequests": true
-				},
-				"preload": true
+				}
+			},
+			"": {
+				"dataSource": "mainService",
+				"preload": true,
+				"settings": {
+					"operationMode": "Server",
+					"autoExpandSelect": true,
+					"earlyRequests": true
+				}
 			}
 		},
 
@@ -88,27 +97,28 @@
 	},
 
 	"sap.ovp": {
-		"globalFilterModel": "",
-		"globalFilterEntityType": "TotalNf",
+		"globalFilterModel": "mainModel",
+		"globalFilterEntitySet": "ZI_Szk_teste_totalnfType",
 		"containerLayout": "resizable",
+		"enableLiveFilter": true,
+		"considerAnalyticalParameters": false,
 
 		"cards": {
-			"card01": {
-				"model": "",
-				"template": "sap.ovp.cards.list",
+			"CardTotalNF": {
+				"model": "mainModel",
+				"template": "sap.ovp.cards.v4.numeric",
 				"settings": {
 					"title": "{{card01_title}}",
-					"subTitle": "{{card01_subtitle}}",
-					"entitySet": "TotalNf",
+					"entitySet": "ZI_Szk_teste_totalnf",
 					"listType": "extended",
 					"listFlavor": "standard",
 					"sortBy": "TotalNf",
-					"sortOrder": "desc",
 					"identificationAnnotationPath": "com.sap.vocabularies.UI.v1.Identification",
 					"lineItemAnnotationPath": "com.sap.vocabularies.UI.v1.LineItem",
 					"dataPointAnnotationPath": "com.sap.vocabularies.UI.v1.DataPoint"
 				}
 			}
-		}
+		},
+		"globalFilterControlType": "MacroFilterBar"
 	}
 }

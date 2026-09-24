@@ -38,21 +38,45 @@ Service Definition e publicada por uma Service Binding do tipo
    `conta_lado` do `/TNVAA/R_TORRE_CTRL`, só que sem a quebra por status/
    divergência — isso fica pra v2 do custom entity, quando o dashboard
    crescer além do card único.)
-3. **Service Definition** — `zszk_sd_torre_totalnf.srvd.asddls`
+3. **Service Definition** — `zi_szk_teste_totalnf.srvd.asddls`
    `New ABAP Repository Object → Service Definition`, colar o conteúdo,
-   ativar.
+   ativar. Exposto **sem alias**, então o entity set publicado tem o
+   mesmo nome do Custom Entity: `ZI_Szk_teste_totalnf`.
 4. **Service Binding** (não é arquivo de texto — criar direto no ADT):
    `New ABAP Repository Object → Service Binding`
-   - Nome sugerido: `ZSZK_UI_TORRE_TOTALNF`
+   - Nome: `ZUI_SZK_TESTE_DASHBOARD`
    - Binding Type: **ODATA V4 - UI**
-   - Service Definition: `ZSZK_SD_TORRE_TOTALNF`
+   - Service Definition: `ZI_SZK_TESTE_TOTALNF`
    - Salvar, clicar em **Publish**, depois **Preview/Local Preview** pra
-     conferir que a entidade `TotalNf` devolve 1 linha com `TotalNf`,
-     `TotalEntrada`, `TotalSaida`, `TotalLegado`.
+     conferir que a entidade `ZI_Szk_teste_totalnf` devolve 1 linha com
+     `TotalNf`, `TotalEntrada`, `TotalSaida`, `TotalLegado`.
 
-URL resultante (padrão on-premise, ajustar host/porta/cliente):
+## Status atual (confirmado via ADT/Fiori Tools)
+
+- ✅ Custom Entity, classe, Service Definition e Service Binding criados,
+  ativados e **publicados** no sistema `saps4d.tenova.consulting:44301`
+  (client `400`).
+- ✅ Service Binding `ZUI_SZK_TESTE_DASHBOARD` com `Local Service
+  Endpoint: Published`.
+- ✅ **Validado pelo próprio gerador oficial do SAP Fiori Tools**: ao
+  rodar o floorplan "Overview Page Application" apontando pra esse
+  serviço, ele detectou sozinho as anotações `@UI.*` inline e montou um
+  card `sap.ovp.cards.v4.numeric` (o card numérico "de verdade" do OVP
+  pra OData V4) em cima da entidade `ZI_Szk_teste_totalnf` — confirma
+  que Custom Entity + OData V4 + anotações inline + OVP funcionam
+  ponta a ponta neste sistema.
+- ⏳ **Pendente**: rodar o app Fiori gerado (projeto separado, fora
+  deste repo) ainda está dando 404 em várias bibliotecas UI5
+  (`sap/fe/macros/*`, `sap/ui/integration/*`, `sap/suite/ui/commons/*`)
+  mesmo usando `npm start` (que já usa o proxy completo pra
+  `ui5.sap.com`, não uma lista restrita de libs). Isso é um problema de
+  **carregamento de recursos do front-end local** (rede/proxy
+  corporativo até `ui5.sap.com`, sob investigação) — não tem relação
+  com o backend/CDS/classe, que já estão confirmados funcionando.
+
+URL real e publicada:
 ```
-/sap/opu/odata4/sap/zszk_ui_torre_totalnf/srvd/sap/zszk_sd_torre_totalnf/0001/
+/sap/opu/odata4/sap/zui_szk_teste_dashboard/srvd/sap/zi_szk_teste_totalnf/0001/
 ```
 
 ## Autorização

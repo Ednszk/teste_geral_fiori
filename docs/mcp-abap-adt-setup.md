@@ -2,6 +2,10 @@
 
 Objetivo: permitir que o Claude Code, rodando **na sua máquina** (que já enxerga o SAP pela rede/VPN da empresa), leia objetos ABAP do sistema `lnl-s4h.opustech.com.br:5200` usando a mesma API REST do Eclipse ADT (`/sap/bc/adt`).
 
+> **Sistema CTC (DEV):** portas levantadas na SMICM de `vhzctds4ci.sap.ctc.com.br`: HTTPS **44300** e **20400**, HTTP **8000**.
+> Use preferencialmente `SAP_URL=https://vhzctds4ci.sap.ctc.com.br:44300` (conexão direta no ICM, sem Web Dispatcher).
+> Os exemplos abaixo usam `lnl-s4h.opustech.com.br:5200`; troque pelo host/porta do sistema desejado.
+
 > **Limitação importante:** o servidor `mcp-abap-adt` é **somente leitura** (16 ferramentas de consulta). Ele lê código de classes, programas, CDS, tabelas, pacotes etc., mas **não cria, altera nem ativa** objetos. O fluxo de trabalho fica: o Claude lê o que existe no SAP → propõe/gera o código → você cola e ativa no Eclipse ADT.
 
 ---
@@ -164,6 +168,7 @@ O Claude devolve o código proposto; você cria/ajusta e ativa no Eclipse ADT (o
 
 | Sintoma | Causa provável / solução |
 | --- | --- |
+| Página "Our service is not available at the moment" (HTTP 503) | Web Dispatcher não roteia `/sap/bc/adt` ou porta/protocolo errado; use a porta HTTPS direta do ICM (SMICM → Serviços) |
 | `ECONNREFUSED` / timeout | VPN desligada ou porta 5200 bloqueada; teste a URL de discovery no navegador |
 | `401 Unauthorized` | Usuário/senha/mandante errados; confira `SAP_CLIENT` |
 | `403 Forbidden` | Falta autorização ADT (`S_ADT_RES`, `S_DEVELOP`) — falar com Basis/segurança |
